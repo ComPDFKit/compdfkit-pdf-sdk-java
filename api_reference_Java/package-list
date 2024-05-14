@@ -1,0 +1,13 @@
+com.compdfkit.core.android.graphics
+com.compdfkit.core.android.text
+com.compdfkit.core.annotation
+com.compdfkit.core.annotation.form
+com.compdfkit.core.common
+com.compdfkit.core.compare
+com.compdfkit.core.document
+com.compdfkit.core.document.action
+com.compdfkit.core.internal
+com.compdfkit.core.library
+com.compdfkit.core.page
+com.compdfkit.core.utils
+com.compdfkit.core.watermark

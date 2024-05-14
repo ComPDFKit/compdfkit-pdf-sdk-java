@@ -1,0 +1,17 @@
+This is the first release of ComPDFKit PDF SDK, it is a new Rapid Development Kit for macos/linux platforms which focuses on helping developers rapidly integrate powerful ComPDFKit PDF technology into their own applications. With ComPDFKit, even developers with a limited knowledge of PDF can quickly realize a PDF Viewer with just a few lines of codes. Now, it is available on macos, linux platforms.
+
+ComPDFKit provides a Java API :
+
+# PDF Core API #
+The Core API contains all of the non-viewer level functions for ComPDFKit.
+
+
+This version release highlights include:
+- High performance PDF libraries to render PDF pages, page objects, annotations, and forms the way they were intended to be viewed: sharp, clear, accurate, and easy to read.
+- APIs for annotation creation, properties access, and modification (appearance setting and drawing). It also provides APIs to export and import all annotations from and to XFDF document. The APIs support the following annotation types: note (text), free text (text box), line, square, circle, highlight, underline, squiggly, strikeout, stamp, and ink (freehand).
+- A powerful method to view existing forms, modify form fields, add and remove form fields, create new forms, allow users to fill in forms, export and import form data by XFDF file, access form data, and set or read form field values and properties.
+- Merge and combine specified page ranges from different PDF files into a single PDF. Split one PDF into separate PDFs based on page ranges. Developers can merge PDF files (partial or whole), extract any pages from a PDF to save as a new PDF, and delete specific pages from a PDF file.
+- A range of encryption and decryption functions to meet different levels of document security protection. It allows users to implement password encryption, set or modify security permissions associated with a document, and allows developers to remove encryption from existing PDF documents.
+
+
+Please refer to the developer_guide_java.pdf document document in the same folder as this file for additional information.
