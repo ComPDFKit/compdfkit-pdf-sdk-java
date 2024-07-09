@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TEST_NAME=AnnotationImportExportTest
-JAR_NAME=compdfkit-1.0-SNAPSHOT.jar
+JAR_NAME=compdfkit-1.5.0.jar
 
 CLSPATHDIR=$(pwd)
 echo $CLSPATHDIR
