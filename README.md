@@ -2,7 +2,7 @@
 
 As part of the KDAN ecosystem, ComPDF SDK for Java comprehensive functions for quickly generating, viewing, annotating, editing, and signing PDFs, and more. It is feature-rich and battle-tested, making PDF files process and manipulation easier and faster.
 
-If you find this library helpful, please consider giving us a ⭐ **Star** on GitHub! Have feedback or questions? Join the conversation in our [Discussions](https://github.com/orgs/ComPDFKit/discussions).
+> If you find ComPDF SDK useful, please consider giving us a ⭐ **Star** on GitHub — it helps us grow and improve! Got questions or ideas? Join the conversation in our [Discussions](https://github.com/orgs/ComPDFKit/discussions).
 
 **Why ComPDF SDK for Java?**
 
@@ -19,23 +19,106 @@ If you find this library helpful, please consider giving us a ⭐ **Star** on Gi
 
 ## Table of Contents
 
-* [Related](#related)
-* [Requirements](#requirements)
-* [How to Run a Demo](#how-to-run-a-demo)
-* [How to Use ComPDF SDK for Java in Java Applications](#how-to-use-compdf-sdk-for-java-in-java-applications)
-* [Free Trial and License](#free-trial-and-license)
-* [Support](#support)
-* [Changelog](#changelog)
 
-## Related
+- [Supported Features](#supported-features)
+- [Requirements](#requirements)
+- [How to Run a Demo](#how-to-run-a-demo)
+- [How to Use ComPDF SDK for Java in Java Applications](#how-to-use-compdf-sdk-for-java-in-java-applications)
+- [Free Trial and License](#free-trial-and-license)
+- [Support](#support)
+- [Changelog](#changelog)
+- [Related](#related)
 
-* Developer Guides - [Java PDF Library for Server](https://www.compdf.com/guides/pdf-sdk/java/overview?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+## Supported Features
+
+- **PDF Generation**: 
   
-* [How to make a Java application with ComPDF SDK](https://www.compdf.com/guides/pdf-sdk/java/make-a-program?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+  - Generates PDFs from HTML  
   
-* [Java PDF Library Code Samples](https://www.compdf.com/guides/pdf-sdk/java/samples?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+  - Provides PDF creation through APIs 
   
-* [ComPDF API Library for Java](https://github.com/ComPDFKit/compdfkit-api-java)
+  - Supports a wide range of HTML and CSS tags  
+  
+  - Dynamic table generation 
+  
+  - Text reflow
+
+- **Annotations**:
+  
+  * Notes - add longer comments with adjustable icon shape and color
+  
+  * Ink - freehand drawing with customizable color, opacity, line thickness
+  
+  * Text - add, move, resize text directly on page
+  
+  * Inspector - adjust annotation looks (line styles, borders, colors, opacity, font)
+  
+  * Comment on Annotations and Update Status
+  
+  * Import & Export & Flatten Annotations (XFDF, FDF, JSON)
+  
+  * Highlight, Underline, Strikeout, Squiggly
+  
+  * Shapes - Rectangle, Oval, Line, Arrow, Polygon, Polyline, Cloud
+  
+  * Stamps, Sound, Movie, File Attachment, Link, Distance, Perimeter, Area
+
+- **Forms**:
+  
+  - Process fillable and static PDF forms
+  
+  - Form filling, form creation, form flattening
+* **Document Editor**: 
+  
+  - Page manipulation - insert, delete, rotate, reorder, extract, crop
+  * Split PDF, Merge PDF
+
+* **Content Editor**: Edit PDF text and images directly like in Word
+
+* **Security**: 
+  
+  - Encryption - set open password, permission password
+  * Restrict printing, copying, editing
+- **Signatures**:
+  
+  - Electronic Signatures - draw, type, image signatures
+  
+  - Digital Signatures - certificate-based signature validation
+* **OCR:**
+  
+  * AI OCR
+  
+  * Recognize Tables, Graphics, Images
+  
+  * Support recognition in 80+ Languages
+
+* **Watermark:**
+  
+  * Add Text or Image Watermarks
+  
+  * Delete Watermarks
+  
+  * Customize Watermarks
+
+* **Compare Documents**: Side-by-side document comparison to highlight differences
+
+* **Redaction**: Permanently remove sensitive content from PDFs
+
+* **Measurement**: Distance, area, perimeter measurement tools
+
+* **Compress**: Optimize and reduce PDF file size
+
+* **PDF/A, PDF/X, PDF/E, PDF/UA**: Standards compliance for archiving, printing, engineering, and accessibility
+
+* **Batch Document Processing:** Provides server-side batch document processing, including PDF editing, conversion, and generation.
+
+* **Convert Files**: 
+  
+  - Convert PDF to Word, Excel, PPT, HTML, CSV, images (PNG,JPEG, JPEG, JPEG2000, BMP, TIFF, TGA, GIF), RTF, TXT, JSON, XML, markdown, searchable PDF, searchable OFD.
+  
+  - Convert images (PNG,JPEG, JPEG, JPEG2000, BMP, TIFF, TGA, GIF) to Word, Excel, PPT, HTML, CSV, RTF, TXT, JSON, XML.
+  
+  - Convert Word, Excel, PPT, HTML, CSV, PNG, RTF, TXT to PDF
   
 
 ## Requirements
@@ -132,4 +215,20 @@ ComPDFKit has a professional R&D team that produces comprehensive technical docu
 
 ## Changelog
 
-Go to our [Changelog](https://www.compdf.com/api/changelog-compdfkit-api) to keep up with the latest updates, improvements, and bug fixes.
+Go to our [Changelog](https://www.compdf.com/api/changelog-compdfkit-api?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit) to keep up with the latest updates, improvements, and bug fixes.
+
+## Related
+
+* More Guides:
+  
+  - [API Reference for ComPDF SDK (Java)](https://developers.compdf.com/guides/pdf-sdk/java/api-reference/index)
+  
+  - Developer Guides - [Java PDF Library for Server](https://www.compdf.com/guides/pdf-sdk/java/overview?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+  
+  - [How to make a Java application with ComPDF SDK](https://www.compdf.com/guides/pdf-sdk/java/make-a-program?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+  
+  - [Java PDF Library Code Samples](https://www.compdf.com/guides/pdf-sdk/java/samples?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit)
+  
+  - [ComPDF API Library for Java](https://github.com/ComPDFKit/compdfkit-api-java)
+- ComPDF Cloud: We also provide Open API for developers. You can [register a free API account](https://api.compdf.com/signup?utm_source=github&utm_medium=compdfkit-pdf-sdk-android&utm_campaign=compdfkit_pdf_sdk_android_repo&ref_platform_id=github_compdfkit) to get up to 200+ API calls monthly for free.
+
