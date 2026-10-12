@@ -1,5 +1,9 @@
 # ComPDF SDK for Java
 
+This repository contains **ComPDFKit PDF SDK for Java 3.2.0**. See the
+[release notes](release_notes.txt), [developer guide](developer_guide_java.pdf),
+and [bundled API reference](api_reference_Java/index.html).
+
 As part of the KDAN ecosystem, ComPDF SDK for Java comprehensive functions for quickly generating, viewing, annotating, editing, and signing PDFs, and more. It is feature-rich and battle-tested, making PDF files process and manipulation easier and faster.
 
 > If you find ComPDF SDK useful, please consider giving us a ⭐ **Star** on GitHub — it helps us grow and improve! Got questions or ideas? Join the conversation in our [Discussions](https://github.com/ComPDFKit/compdfkit-pdf-sdk-java/discussions).
@@ -137,17 +141,31 @@ ComPDF SDK for Java requires apps to enable Java 8 language features to build.
 
 ComPDF SDK for Java provides multiple demos for developers to learn how to call the SDK on Java applications. You can find them in the ***"samples"*** folder. In this guide, we take ***"DocumentInfoTest"*** as an example to show how to run it on Java applications.
 
-1. Import the ***"samples"*** project on IDE.
+1. Keep the supplied layout intact: the SDK used by the examples is
+   `samples/lib/compdfkit-3.2.0.jar`, and shared Java helpers are in `samples/common`.
 
-2. Navigate to the ***"JAVA"*** folder which is in ***"DocumentInfoTest"*** file and run the sample with. For example `/samples/DocumentInfoTest/JAVA`.
+2. Obtain your own SDK license and save it in a local file outside the checkout.
+   No license key is included in this repository. Point the examples to that file:
 
+   ```sh
+   export COMPDFKIT_LICENSE_FILE="/absolute/path/to/your/license_key.txt"
    ```
-   ./RunTest.sh
+
+   Alternatively, create `samples/common/license_key.txt` locally; it is ignored
+   by Git. Do not commit license keys.
+
+3. From the repository root, run the example directly from its directory
+   (there is no intermediate `JAVA` directory):
+
+   ```sh
+   cd samples/DocumentInfoTest
+   bash ./RunTest.sh
    ```
 
-   ![](https://compdf.oss-us-east-1.aliyuncs.com/jni/folder.png)
-
-   **Note:** *This is a demo project, presenting completed ComPDF SDK functions. The functions might be different based on the license you have purchased. Please check that the functions you choose work fine in this demo project.* The output files will be in `/samples/out`.
+   **Note:** Available functionality depends on your license. Generated output
+   is written under `samples/out` and must not be committed. Signing examples
+   may need additional local certificates or services; see
+   [sample setup and signing prerequisites](samples/README.md).
 
 
 
@@ -166,7 +184,8 @@ Create a Java application using the IDE. Here we create a new **Java** project.
 
 ### Add the Package of ComPDF SDK for Java
 
-1. The first thing we need to do is to import ComPDF SDK for Java. Copy ***"lib"*** to the **project**.
+1. Add `lib/compdfkit-3.2.0.jar` to your application's dependencies.
+   The examples separately use the identical JAR in `samples/lib`.
 
 ![](https://compdf.oss-us-east-1.aliyuncs.com/jni/copy-libs.png)
 
@@ -179,7 +198,7 @@ Create a Java application using the IDE. Here we create a new **Java** project.
    ```java
    static{
        try {
-          NativeKMPDFKit.initialize("your license", "your deviceId", "", Constants.LIB_DIR_NAME);
+          NativeKMPDFKit.initialize("YOUR_LICENSE_KEY", "", "ComPDFKit", Constants.LIB_DIR_NAME);
        } catch (FileNotFoundException e) {
              throw new RuntimeException(e);
        }
@@ -188,7 +207,6 @@ Create a Java application using the IDE. Here we create a new **Java** project.
 
 4. Start the `main` method to print out the information of your computer's system version. If the information is printed successfully, you have integrated ComPDF SDK for Java successfully!
 
-   ![](https://compdf.oss-us-east-1.aliyuncs.com/jni/result1.2.0.png)
 
 ## Free Trial and License
 
@@ -215,6 +233,11 @@ ComPDFKit has a professional R&D team that produces comprehensive technical docu
 
 ## Changelog
 
+The bundled [release notes](release_notes.txt) describe version 3.2.0, including
+PAdES/LTV, structured validation, AWS KMS, external CMS/PKCS#7 containers,
+two-phase signing, RFC 3161 timestamps, invisible signatures, and online
+license verification.
+
 Go to our [Changelog](https://www.compdf.com/api/changelog-compdfkit-api?utm_source=github&utm_medium=compdfkit-pdf-sdk-java&utm_campaign=compdfkit_pdf_sdk_java_repo&ref_platform_id=github_compdfkit) to keep up with the latest updates, improvements, and bug fixes.
 
 ## Related
@@ -231,4 +254,3 @@ Go to our [Changelog](https://www.compdf.com/api/changelog-compdfkit-api?utm_sou
   
   - [ComPDF API Library for Java](https://github.com/ComPDFKit/compdfkit-api-java)
 - ComPDF Cloud: We also provide Open API for developers. You can [register a free API account](https://api.compdf.com/signup?utm_source=github&utm_medium=compdfkit-pdf-sdk-android&utm_campaign=compdfkit_pdf_sdk_android_repo&ref_platform_id=github_compdfkit) to get up to 200+ API calls monthly for free.
-
