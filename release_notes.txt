@@ -1,17 +1,329 @@
-This is the first release of ComPDFKit PDF SDK, it is a new Rapid Development Kit for macos/linux platforms which focuses on helping developers rapidly integrate powerful ComPDFKit PDF technology into their own applications. With ComPDFKit, even developers with a limited knowledge of PDF can quickly realize a PDF Viewer with just a few lines of codes. Now, it is available on macos, linux platforms.
+ComPDFKit PDF SDK for Java - Release Notes
+============================================
 
-ComPDFKit provides a Java API :
+Version: 3.2.0
+Release Date: Oct 8, 2026
 
-# PDF Core API #
-The Core API contains all of the non-viewer level functions for ComPDFKit.
+============================================
+What's New
+============================================
+
+Version 3.2.0 expands digital signing with PAdES and long-term validation
+(LTV), AWS KMS integration, portable two-phase external signing, and
+RFC 3161 timestamp services. It also adds invisible-signature examples,
+online license verification, and improvements to resource management,
+form handling, page operations, and sample coverage.
+
+--------------------------------------------
+New Features
+--------------------------------------------
+
+1. PAdES Signing and Long-Term Validation
+   - Add PKCS#12 signing workflows targeting PAdES B, T, LT, and LTA profiles.
+   - Add RFC 3161 signature timestamps and document timestamps through a TSA.
+   - Collect certificates, OCSP responses, and CRLs into PDF DSS/VRI structures.
+   - Refresh LTV evidence in existing signed PDFs through incremental updates,
+     with an option to append a document timestamp.
+   - Inspect embedded LTV materials, missing evidence, and DSS/VRI counts.
+   - Add a TSA URL overload of CPDFDocument.writeSignature() for existing fields.
+   - APIs: CPDFPadesSigner, CPDFPadesOptions, CPDFPadesResult, CPDFLtvService.
+
+2. Structured Signature Validation
+   - Validate signatures from saved PDFs or exact PDF bytes and return detailed
+     per-signature reports.
+   - Check signature integrity, signed-byte coverage, document permissions,
+     certificate chains, timestamps, and embedded revocation evidence.
+   - Configure trust certificates, validation time, and a signature-field filter.
+   - Inspect timestamp sources and structured error and warning codes.
+   - APIs: CPDFSignatureValidator, CPDFSignatureValidationOptions,
+     CPDFSignatureValidationResult, CPDFSignatureValidationReport.
+
+3. AWS KMS Signing
+   - Create detached PDF signatures using a key held in AWS KMS.
+   - Retrieve the KMS public key and generate a PKCS#10 certificate signing
+     request (CSR) without exporting the private key.
+   - Check that the supplied signing certificate matches the KMS public key.
+   - Return signature creation results and separate post-signing validation.
+   - APIs: CPDFAwsKmsSigner, CPDFAwsKmsConfig, CPDFKmsDataResult.
+
+4. External CMS/PKCS#7 Container Signing
+   - Integrate signing services through a synchronous Java provider callback.
+   - Supply the PDF ByteRange SHA-256 digest to the provider and embed its
+     complete detached CMS/PKCS#7 SignedData DER response into the PDF.
+   - Validate container structure and reserved size, report provider failures,
+     and optionally validate the completed signature.
+   - APIs: CPDFExternalSignatureSigner.signWithContainer(),
+     CPDFSignatureContainerProvider, CPDFSignatureContainerRequest,
+     CPDFSignatureContainerResult.
+
+5. Two-Phase External Signing
+   - Prepare a PDF signature field, reserve its Contents placeholder, and return
+     the digest to sign together with a portable Core Session.
+   - Fill either a complete detached CMS/PKCS#7 container or a raw signature
+     value, with file and in-memory input/output overloads.
+   - Support document-digest and signed-attributes modes with SHA-256,
+     SHA-384, and SHA-512.
+   - Save and load the Session so preparation and completion can run in
+     different JVMs or on different machines without retaining native handles.
+   - Preserve prepared inputs for retry and report capacity, payload, and
+     post-fill validation errors separately.
+   - APIs: CPDFExternalSignSession, CPDFExternalSignPrepareOptions/Result,
+     CPDFExternalSignFillOptions/Result, CPDFSignatureDigest.
+
+6. RFC 3161 Timestamp Services
+   - Request a timestamp token for original data or a precomputed digest.
+   - Return the DER token, TSA generation time, and request diagnostics.
+   - Append an independent ETSI.RFC3161 document timestamp to a saved PDF,
+     including an externally signed PDF, without the user's signing private key.
+   - Configure the TSA URL, request policy, nonce, certificate inclusion,
+     timeout, retries, proxy, and maximum response size.
+   - Retain existing PKCS#12/PAdES embedded signature timestamp workflows.
+   - APIs: CPDFTimestampService, CPDFTimestampOptions, CPDFTimestampResult.
+
+7. Invisible Digital Signatures
+   - Add a SignatureTest example that creates an invisible signature by setting
+     the signature widget rectangle to [0, 0, 0, 0].
+   - Sign through the existing writeSignature() API without a visible appearance,
+     then reopen the PDF to verify integrity and document permissions.
+   - APIs: CPDFSignatureWidget.setRect(), CPDFDocument.writeSignature().
+
+8. Online License Verification
+   - Add an initialization option for online license verification, alongside
+     the existing offline license flow.
+   - Add error handling for online activation and verification failures.
+   - Update cyan to improve cached-license refresh, request cancellation, and
+     background verification cleanup during shutdown.
+   - API: CPDFLibrary.initialize(license, deviceId, applicationId,
+     enableOnlineVerify).
+
+9. Export All Form Widgets
+   - Add a convenience overload to export all custom form widgets to XFDF
+     without supplying a field-name list.
+   - API: CPDFDocument.exportCustomWidgets(exportFilePath, tmpCachePath).
+
+--------------------------------------------
+Improvements
+--------------------------------------------
+
+- Update the PDF Core and PDFium libraries and associated native interfaces.
+- Improve native resource cleanup for pages, annotations, form widgets,
+  signatures, and document comparison objects.
+- Add close() methods to CPDFCompare and CPDFCompareDrawings, and reuse the
+  generated comparison document wrapper to avoid duplicate ownership.
+- Improve document-owned object caching and release resources when documents
+  close or signatures are removed.
+- Add LTV/KMS, external-container, two-phase signing, and timestamp examples,
+  with local test services and post-signing validation.
+- Add fixed-configuration examples for delayed Prepare/Fill completion,
+  persisted Session recovery, and invisible signatures.
+- Update Linux native dependency integration for the merged Core and cyan,
+  including qpdf, HarfBuzz, JPEG, and zlib static libraries.
+- Refresh the English API Reference and both developer guides, including
+  navigable PDF contents and bookmarks.
+- Expand examples for redaction, text extraction, form properties, actions,
+  fonts, and page organization; update API documentation and sample layout.
+
+--------------------------------------------
+Bug Fixes
+--------------------------------------------
+
+- Restore CPDFFont native method registration so font APIs can be called.
+- Fix native page-handle conversion in indexOfPage().
+- Return an empty string for pages without labels instead of throwing an
+  exception when getPageLabel() is called.
+- Correct form-field read-only flag updates and handle missing fonts when
+  reading text properties without aborting the application.
+- Remove trailing NUL characters from button titles and fix invalid temporary
+  string access in form-field names, stamp names, and signature metadata.
+- Implement CPDFOutline.setAction() and preserve an action's type when setting
+  its destination.
+- Treat pages with no annotations or form fields as successful no-op cases
+  when flattening, including flattenAllPages().
+- Fix a native crash when flattening Form XObjects with empty clipping paths
+  by checking clipping-path references before accessing their path counts.
+- Use a seekable backing source for exact-byte memory signature validation
+  to avoid the Core FileAccess integrity-verification limitation.
+- Correct image-export path handling when the destination directory does not
+  include a trailing slash.
+- Improve cleanup and exception handling when external signature providers
+  return invalid results or fail during signing.
+
+--------------------------------------------
+Compatibility and Usage Notes
+--------------------------------------------
+
+- CPDFDocument.copyPage() and addPage() have been removed. Use importPages()
+  instead. To copy pages within the same saved PDF, open it as a second
+  CPDFDocument and import the required pages from that document.
+- Direct AWS KMS PDF signing supports RSA keys of at least 2048 bits with
+  RSASSA_PKCS1_V1_5_SHA_256. Session tokens, RSA-PSS, and ECDSA are not supported
+  by the current KMS binding; CPDFAwsKmsSigner.signPades() is not supported.
+- Direct KMS signing creates an ordinary detached signature. The external
+  container and two-phase entry points use adbe.pkcs7.detached and do not
+  automatically collect LTV evidence or inject an embedded timestamp. A service
+  may supply its own timestamped CMS container; an independent document
+  timestamp can be appended after signing. These steps do not, by themselves,
+  establish PAdES LT/LTA.
+- Raw two-phase RSA signature values use PKCS#1 v1.5 over the prepared digest;
+  RSA-PSS parameters are not represented by this interface. Do not hash the
+  supplied digest again or sign its Base64 text. Persist the prepared PDF,
+  complete Session, and digest as one transaction, and do not mix preparations.
+- Independent document timestamps currently use SHA-256. TSA data/digest
+  token requests support SHA-256, SHA-384, and SHA-512. A successful token
+  request does not, by itself, establish TSA certificate trust.
+- Online license support is compiled into the Linux package. Enable it at
+  runtime with initialize(..., true); the three-argument initialize() overload
+  continues to use offline verification by default.
+- Java bytecode compatibility remains Java 8. Native binaries and dependencies
+  must match the target platform and architecture.
+- Signature creation success, material-readiness results, and LT/LTA profile
+  helpers are not sufficient on their own to establish signature validity.
+  Inspect the detailed integrity, timestamp, certificate-chain, and revocation
+  results before accepting output. Enable revocation checking for LTV validation.
+- LTV prolongation does not repair an invalid existing signature or add a
+  missing embedded signature timestamp. The new file-based signing entry
+  points require distinct, previously unused output paths and do not accept
+  a PDF-open password.
+- Memory signing does not reserialize the PDF for validation. The verifier uses
+  an anonymous memory file on Linux when available, or a private temporary
+  byte-for-byte copy removed after validation.
+- PDF/E-1 conversion remains an existing limitation in the provided conversion
+  sample; successful process completion is not a standards-conformance verdict.
 
 
+Version: 3.0.0
+Release Date: Aug 5, 2026
+
+--------------------------------------------
+New Features
+--------------------------------------------
+1Add QR code feature
+
+Version: 1.6.0
+Release Date: April 4, 2026
+
+============================================
+What's New
+============================================
+
+This release introduces significant enhancements to the ComPDFKit PDF SDK for Java,
+adding 10 major new features that expand document manipulation capabilities and
+improve developer productivity.
+
+--------------------------------------------
+New Features
+--------------------------------------------
+
+1. Background Support
+   - Add solid color backgrounds to PDF documents
+   - Add image backgrounds with customizable positioning
+   - Configure background opacity, rotation, and scale
+   - Set horizontal and vertical alignment (left, center, right / top, center, bottom)
+   - Apply backgrounds to specific page ranges
+   - Control background visibility for viewing and printing
+   - Read existing background properties
+   - Clear backgrounds from documents
+   - API: CPDFBackground class with comprehensive configuration options
+
+2. Bates Numbering
+   - Add sequential Bates numbers to PDF documents for legal and archival purposes
+   - Support customizable number format with prefix, suffix, starting value, and digit width
+   - Format: <<#digits#start#prefix#suffix>> (e.g., <<#3#1#DOC-#>> generates DOC-001, DOC-002, etc.)
+   - Configure font name, size, and color for Bates numbers
+   - Set margins and apply to specific page ranges
+   - Six fixed positions for Bates number placement
+   - Read and clear existing Bates numbering
+   - API: CPDFBates class
+
+3. Header and Footer
+   - Add customizable headers and footers to PDF documents
+   - Support six fixed positions (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
+   - Configure font properties (name, size, color) for each position
+   - Set margins and page offset for numbering
+   - Support for page numbering with format rules
+   - Apply headers/footers to specific page ranges
+   - Read and clear existing headers/footers
+   - API: CPDFHeaderFooter class
+
+4. Bookmark Management
+   - Add bookmarks to specific pages for quick navigation
+   - Edit bookmark properties (page index, title, date)
+   - Retrieve all bookmarks from a document
+   - Delete bookmarks by page index
+   - Simple flat list structure for easy management
+   - API: CPDFBookmark class, document.addBookmark(), document.getBookmarks(), document.removeBookmark()
+
+5. Outline 
+   - Create hierarchical document outlines for navigation
+   - Support nested outline structure with multiple levels
+   - Set outline titles and destinations
+   - Link outlines to specific pages or actions
+   - Read existing outline structure
+   - Reorder outline items
+   - Delete outline entries
+   - API: CPDFOutline class with methods for tree manipulation
+
+6. Standard PDF Conversion
+   - Convert regular PDFs to standardized PDF formats
+   - Support for PDF/A (archival standards: A-1a, A-2u, etc.)
+   - Support for PDF/X-4 (prepress exchange format)
+   - Support for PDF/E-1 (engineering document exchange)
+   - Support for PDF/UA-1 (Universal Accessibility standard)
+   - Configure UA metadata (title, language) via CPDFUAConfig
+   - Specify ICC color profiles for conversion
+   - Check conversion permissions before processing
+   - API: CPDFDocument.WriteStandardPDFToFilePath() with PDFDocumentType enum
+
+7. Encryption Algorithm Selection
+   - Choose encryption algorithms beyond basic password protection
+   - Support for RC4 encryption
+   - Support for AES-128 encryption
+   - Support for AES-256 encryption
+   - Set user passwords with selected algorithm
+   - Retrieve current encryption algorithm
+   - API: CPDFDocument.setEncryptAlgorithm(), CPDFDocument.PDFDocumentEncryptAlgo enum
+
+8. Image Document Detection and Creation
+   - Detect if entire document is image-based (e.g., scanned documents)
+   - Check if individual pages are image pages
+   - Create new PDF documents from images
+   - Support multiple image insertion modes (scale to fill, etc.)
+   - Specify page dimensions when creating from images
+   - API: CPDFDocument.isImageDoc(), CPDFPage.isImagePage(), CPDFDocument.insertPageWithImagePath()
+
+9. Document Optimization
+   - Reduce PDF file size through optimization
+   - Configure optimization flags (remove unused objects, compress images, etc.)
+   - Remove redundant objects and empty objects
+   - Compress images with configurable quality
+   - Remove invalid links, annotations, forms, multimedia
+   - Remove JavaScript and thumbnails
+   - Optimize page content
+   - Set color, grayscale, and monochrome image options
+   - Configure image resolution and compression quality
+   - API: CPDFOptimizeOptions class, CPDFDocument.optimizeSaveAsCopy()
+
+10. Compress and Optimize
+    - Compress and optimize and save PDF directly to output stream
+    - Useful for web applications and cloud storage
+    - Same optimization capabilities as file-based optimization
+    - Support for custom output streams
+    - API: CPDFDocument.optimizeSaveAsCopy(OutputStream, boolean)
+
+11. Text Search
+    - Search for text within PDF documents
+    - Case-sensitive and case-insensitive search options
+    - Iterate through all search results
+    - Get text range information (location, length)
+    - Extract matched text content
+    - Combine with CPDFTextPage for advanced text operations
+    - API: CPDFTextSearcher class with PDFSearchOptions
+
+Version: 1.5.3
+Release Date: Sep 28, 2025
 This version release highlights include:
 - High performance PDF libraries to render PDF pages, page objects, annotations, and forms the way they were intended to be viewed: sharp, clear, accurate, and easy to read.
 - APIs for annotation creation, properties access, and modification (appearance setting and drawing). It also provides APIs to export and import all annotations from and to XFDF document. The APIs support the following annotation types: note (text), free text (text box), line, square, circle, highlight, underline, squiggly, strikeout, stamp, and ink (freehand).
 - A powerful method to view existing forms, modify form fields, add and remove form fields, create new forms, allow users to fill in forms, export and import form data by XFDF file, access form data, and set or read form field values and properties.
 - Merge and combine specified page ranges from different PDF files into a single PDF. Split one PDF into separate PDFs based on page ranges. Developers can merge PDF files (partial or whole), extract any pages from a PDF to save as a new PDF, and delete specific pages from a PDF file.
 - A range of encryption and decryption functions to meet different levels of document security protection. It allows users to implement password encryption, set or modify security permissions associated with a document, and allows developers to remove encryption from existing PDF documents.
-
-
-Please refer to the developer_guide_java.pdf document document in the same folder as this file for additional information.

@@ -1,0 +1,32 @@
+# Local SDK activation material must never be committed.
+license_key.txt
+license.txt
+license.xml
+license.json
+.env
+.env.*
+
+# Private keys and containers, including locally generated sample credentials.
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+/samples/TestFiles/local-certificates/
+/samples/TestFiles/SignatureContainer/
+/samples/TestFiles/SignatureLtvAndroid/
+/samples/TestFiles/.local-signature-materials-*/
+
+# Distribution archives are not published in this repository update.
+*.zip
+
+# Generated files and local editor/OS metadata.
+/samples/out/
+*.class
+*.pyc
+__pycache__/
+.DS_Store
+._*
+__MACOSX/
+.idea/
+*.log
